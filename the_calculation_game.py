@@ -36,19 +36,20 @@ def welcome_page():
     """
     for d in home_page.winfo_children():
         d.destroy() 
+    # This clears the page and ensures that the next text appears
 
     gui.Label(home_page, text="Welcome to The Calculation Games!!!").pack()
 
     global name_input
     name_input = gui.Entry(home_page)
     name_input.pack()
+    #Creates new box for the user to add the name
 
     gui.Label(home_page, text="Firstly, What is your name?").pack()
 
- 
-
     gui.Button(home_page, text="PROCEED", command=difficulty_selection).pack()
-#ALL NAMES CHANGED JUST NEED TO CHECK WHAT ELSE CAN BE CHANGED 
+    #Button allows the user to move on once agai n
+
 
 def difficulty_selection():
     """
@@ -59,9 +60,11 @@ def difficulty_selection():
     if not player_name:
         gui.Label(home_page, text="Please enter a name").pack()
         return
+    #The user must input a value or there won't be able to proceed
 
     for d in home_page.winfo_children(): 
         d.destroy()
+    #The screen is cleared
 
     gui.Label(home_page, text="Welcome " + player_name + ", I hope you are up for the challenge").pack()
     gui.Label(home_page, text="Please select your difficulty - Standard or Maths Wizard if you dare!").pack()
@@ -103,7 +106,7 @@ def qnext():
     for d in home_page.winfo_children():
         d.destroy()
 
-    qnumber += 1
+    qnumber += 1 #The questions number increases until max is reached 
 
     num1 = random.randint(1, max_value)
     num2 = random.randint(1, max_value)
@@ -119,9 +122,11 @@ def qnext():
 
     gui.Label(home_page, text= "Question " + str(qnumber) + " of " + str(qmax)).pack()
     gui.Label(home_page, text=equation).pack()
+    #Text used to indicate what question the player is on
 
     response_label = gui.Label(home_page, text="")
     response_label.pack()
+    #A box is created for the user/player to input an answer
 
     user_answer = gui.Entry(home_page)
     user_answer.pack()
@@ -139,16 +144,16 @@ def answer_val(entry, response_label): #used to validate all answers
     if not user_input:
         response_label.config(text="Please type an answer!")
         return
+    #The user must enter a value to continue
 
     if user_input.isdigit() and int(user_input) == user_ans:
-        points += 1
+        points += 1 #points increase each time there is a correct answer
         response_label.config(text="Well done! Next Question")
 
     else:
         response_label.config(text=f"Nice Try! The answer is {user_ans}")
 
-    home_page.after(2000, qnext)
-
+    home_page.after(5000, qnext)
 
 def end_of_game():
     """
@@ -159,14 +164,18 @@ def end_of_game():
     for d in home_page.winfo_children():
         d.destroy()
 
-    if player_name not in high_score or points > high_score[player_name]: 
+    if player_name not in high_score or high_score[player_name] < points: 
         high_score[player_name] = points
+    #This checks if the player's name is already in the system
+    
 
     gui.Label(home_page, text="Challenge Finished!").pack()
     gui.Label(home_page, text=f"{player_name}, You scored: {points}/{qmax}").pack()
     gui.Label(home_page, text=f" And your highest score: {high_score[player_name]}").pack()
 
     gui.Button(home_page, text="Do you want to play again?", command=welcome_page).pack()
+    #The player can attempt to play again and their new high score will be saved so they can try and beat it
 
 welcome_page()
+
 home_page.mainloop()
