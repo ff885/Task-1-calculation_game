@@ -10,7 +10,7 @@ the highest score if they have played before
 
 # PAGE DESIGN
 home_page = gui.Tk()
-home_page.geometry("500x500")
+home_page.geometry("800x800")
 home_page.title(str("The Calculation Game"))
 home_page.configure(background="#F54927")
 
@@ -177,5 +177,5 @@ def end_of_game():
     #The player can attempt to play again and their new high score will be saved so they can try and beat it
 
 welcome_page()
-
 home_page.mainloop()
+
